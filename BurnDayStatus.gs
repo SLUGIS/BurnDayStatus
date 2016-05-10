@@ -1,24 +1,24 @@
 /**
  * Read values coming from the form
  */
-function onFormSubmission(e) {
-  Logger.log(e);
-   //Logger.log("coastal: " + e.namedValues.coastal[0]);
-   //Logger.log("inland: " + e.namedValues.inland[0]);
-   
-  /**
-   * Use our own function to post to our table
-   */
-  postToCartoDB(
-    e.namedValues.coastal[0],
-    e.namedValues.inland[0],
-    e.namedValues.Timestamp[0]
-  );
+function BurnDayStatusEdit(e) {
+  Logger.log("my edit");
+  var ss = SpreadsheetApp.getActiveSheet();
+
+  if (ss.getName().equals("Morning Report")) {
+
+    // get range of values that contain string from admin report
+     var coastalBurnStatusRange = ss.getRange("AC5:AG5");
+     var inlandBurnStatusRange = ss.getRange("AC6:AG6");
+     var d = new Date();
+    
+     postToCartoDB(coastalBurnStatusRange.getValue(), inlandBurnStatusRange.getValue(), d.toLocaleDateString());
+  }
 }
 
 
 /**
- * Insert color into CartoDB
+ * Insert color into CartoDB using sql http
  */
 function postToCartoDB(coastal, inland, timestamp) {
   Logger.log("posting to CartoDB");
@@ -27,13 +27,28 @@ function postToCartoDB(coastal, inland, timestamp) {
    * Keep your key private!
    */
   var cartodb_host = "slu.cartodb.com";   //Your CartoDB domain
-  var cartodb_api_key = "6e8538f81acbdc7aac8ffccbb2f4cff92a7bd05e";  //Your CartoDB API KEY
+  var cartodb_api_key = "";  //Your CartoDB API KEY
   
   Logger.log("coastal: " + coastal);
   Logger.log("inland: " + inland);
   
-  var inlandStatus = inland == "Positive" ? "TRUE" : "FALSE";
-  var coastalStatus = coastal == "Positive" ? "TRUE" : "FALSE";
+  var inlandStatus
+  var coastalStatus
+  
+  if (inland == "PERMISSIVE")
+    inlandStatus = "TRUE"
+  else if (inland == "NEGATIVE")
+    inlandStatus = "FALSE"
+  else
+    inlandStatus = "UNKNOWN"
+    
+  if (coastal == "PERMISSIVE")
+    coastalStatus = "TRUE"
+  else if (coastal == "NEGATIVE")
+    coastalStatus = "FALSE"
+  else
+    coastalStatus = "UNKNOWN"
+
   var timeStamp = timestamp.replace("'","''");
   
   /**
