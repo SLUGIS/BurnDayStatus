@@ -6,13 +6,23 @@ function BurnDayStatusEdit(e) {
   var ss = SpreadsheetApp.getActiveSheet();
 
   if (ss.getName().equals("Morning Report")) {
+<<<<<<< HEAD
 
     // get range of values that contain string from admin report
+=======
+    
+>>>>>>> bac1fe6903aee073640145fdf0aff7144a3cb085
      var coastalBurnStatusRange = ss.getRange("AC5:AG5");
      var inlandBurnStatusRange = ss.getRange("AC6:AG6");
      var d = new Date();
     
+<<<<<<< HEAD
      postToCartoDB(coastalBurnStatusRange.getValue(), inlandBurnStatusRange.getValue(), d.toLocaleDateString());
+=======
+     
+     postToCartoDB(coastalBurnStatusRange.getValue(), inlandBurnStatusRange.getValue(), d.toLocaleString());
+
+>>>>>>> bac1fe6903aee073640145fdf0aff7144a3cb085
   }
 }
 
