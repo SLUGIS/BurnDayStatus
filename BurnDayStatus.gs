@@ -27,7 +27,7 @@ function postToCartoDB(coastal, inland, timestamp) {
    * Keep your key private!
    */
   var cartodb_host = "slu.cartodb.com";   //Your CartoDB domain
-  var cartodb_api_key = "6e8538f81acbdc7aac8ffccbb2f4cff92a7bd05e";  //Your CartoDB API KEY
+  var cartodb_api_key = "";  //Your CartoDB API KEY
   
   Logger.log("coastal: " + coastal);
   Logger.log("inland: " + inland);
