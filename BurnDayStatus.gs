@@ -1,19 +1,20 @@
 /**
  * Read values coming from the form
  */
-function onFormSubmission(e) {
-  Logger.log(e);
-   //Logger.log("coastal: " + e.namedValues.coastal[0]);
-   //Logger.log("inland: " + e.namedValues.inland[0]);
-   
-  /**
-   * Use our own function to post to our table
-   */
-  postToCartoDB(
-    e.namedValues.coastal[0],
-    e.namedValues.inland[0],
-    e.namedValues.Timestamp[0]
-  );
+function BurnDayStatusEdit(e) {
+  Logger.log("my edit");
+  var ss = SpreadsheetApp.getActiveSheet();
+
+  if (ss.getName().equals("Morning Report")) {
+    
+     var coastalBurnStatusRange = ss.getRange("AC5:AG5");
+     var inlandBurnStatusRange = ss.getRange("AC6:AG6");
+     var d = new Date();
+    
+     
+     postToCartoDB(coastalBurnStatusRange.getValue(), inlandBurnStatusRange.getValue(), d.toLocaleString());
+
+  }
 }
 
 
